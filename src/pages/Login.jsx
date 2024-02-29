@@ -1,7 +1,19 @@
+import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 
 const Login = () => {
+  const [disabled, setDisabled] = useState(true);
+
+  useEffect(() => {
+    loadCaptchaEnginge(6);
+  }, []);
+
   const handleLogin = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -22,6 +34,15 @@ const Login = () => {
     //   });
     //   navigate(from, { replace: true });
     // });
+  };
+
+  const handleValidateCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
+    if (validateCaptcha(user_captcha_value)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
   };
 
   return (
@@ -69,9 +90,11 @@ const Login = () => {
                 </label>
               </div>
               <div className="form-control">
-                <label className="label">{/* <LoadCanvasTemplate /> */}</label>
+                <label className="label">
+                  <LoadCanvasTemplate />
+                </label>
                 <input
-                  //   onBlur={handleValidateCaptcha}
+                  onBlur={handleValidateCaptcha}
                   type="text"
                   name="captcha"
                   placeholder="type the captcha above"
@@ -88,7 +111,7 @@ const Login = () => {
                 />
               </div>
             </form>
-            <p className="m-2 p-2">
+            <p>
               <small>
                 New Here? <Link to="/signup">Create an account</Link>{" "}
               </small>
