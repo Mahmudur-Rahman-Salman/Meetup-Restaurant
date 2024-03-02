@@ -1,11 +1,12 @@
 import { useContext } from "react";
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Firebase/Providers/AuthProviders";
 
 const SignUp = () => {
+  const navigate = useNavigate();
   const {
     register,
     handleSubmit,
@@ -30,7 +31,7 @@ const SignUp = () => {
             showConfirmButton: false,
             timer: 1500,
           });
-          //   navigate("/");
+            navigate("/");
         })
         .catch((error) => console.log(error));
     });
